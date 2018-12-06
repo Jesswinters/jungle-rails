@@ -82,3 +82,16 @@ main section.products-show {
     }
   }
 }
+
+.nav > li > a {
+  display: inline-block;
+}
+
+.navbar-user-links {
+  padding: 15px 8px !important;
+}
+
+.navbar-user {
+  display: inline-block;
+  padding: 15px 8px;
+}
