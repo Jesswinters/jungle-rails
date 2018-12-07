@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+
+  <body>
+    <%= @order.id %>
+    <h1>Your order was placed. Thanks for your order <%= @order.email %>!</h1>
+
+    <% order_total = 0 %>
+    <% @order.line_items.each do |line_item| %>
+      <% product = line_item.product %>
+      <% total_dollars = line_item.total_price_cents / 100.0 %>
+
+      <div><%= image_tag product.image.tiny %></div>
+      <div><%= product.name %></div>
+      <div><%= product.description %></div>
+      <div><%= product.quantity %></div>
+
+      <div><%= total_dollars %></div>
+      <% order_total += line_item.total_price_cents %>
+    <% end %>
+
+    <h2><%= order_total / 100.0 %></h2>
+  </body>
+</html>
