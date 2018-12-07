@@ -95,3 +95,16 @@ main section.products-show {
   display: inline-block;
   padding: 15px 8px;
 }
+
+.cart-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.06);
+}
+
+.cart-empty--inner {
+  text-align: center;
+}
