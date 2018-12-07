@@ -1,11 +1,9 @@
 <section class="products-show">
-
   <header class="page-header">
     <h1><%= link_to @product.category.name, @product.category %> &raquo; <%= @product.name %></h1>
   </header>
 
   <article class="product-detail">
-
     <div class="row">
 
       <div class="col-sm-4">
@@ -26,6 +24,40 @@
       </div>
     </div>
 
-  </article>
+    <div class="row">
+      <h2>Reviews</h2>
 
+      <% @product.reviews.reverse.each do |review| %>
+        <div>
+          <p><%= review.rating %></p>
+          <p><%= review.description %></p>
+
+          <% if current_user %>
+            <% if review.user_id == current_user.id %>
+              <%= link_to 'Delete', review, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if current_user %>
+      <div class="row">
+        <h2>New review</h2>
+
+        <%= form_for([@product, @review]) do |f| %>
+          <div class="field">
+            <%= f.label :rating %>
+            <%= f.select :rating, options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]) %>
+            <%= f.label :description %>
+            <%= f.text_area :description %>
+          </div>
+
+          <div class="actions">
+            <%= f.submit %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </article>
 </section>

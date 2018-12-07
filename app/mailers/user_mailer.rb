@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
 
   def order_receipt_email(order)
     @order = order
-    mail(to: order.email.to_s, subject: 'Your order #{@order.id}')
+    mail(to: order.email.to_s, subject: 'Your order #{order.id}')
   end
 
 end

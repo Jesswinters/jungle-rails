@@ -21,6 +21,14 @@ end
 
 # Let's do this ...
 
+## USERS
+
+user1 = User.find_or_create_by!({
+  name: 'Jess',
+  email: 'jskawinters@gmail.com',
+  password_digest: ENV['PASSWORD']
+})
+
 ## CATEGORIES
 
 puts "Finding or Creating Categories ..."
@@ -35,7 +43,7 @@ puts "Re-creating Products ..."
 
 Product.destroy_all
 
-cat1.products.create!({
+product1 = cat1.products.create!({
   name:  'Men\'s Classy shirt',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel1.jpg'),
@@ -43,7 +51,7 @@ cat1.products.create!({
   price: 64.99
 })
 
-cat1.products.create!({
+product2 = cat1.products.create!({
   name:  'Women\'s Zebra pants',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel2.jpg'),
@@ -51,7 +59,7 @@ cat1.products.create!({
   price: 124.99
 })
 
-cat1.products.create!({
+product3 = cat1.products.create!({
   name:  'Hipster Hat',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel3.jpg'),
@@ -82,7 +90,6 @@ cat1.products.create!({
   quantity: 82,
   price: 224.50
 })
-
 
 cat2.products.create!({
   name:  'Modern Skateboards',
@@ -132,5 +139,24 @@ cat3.products.create!({
   price: 2_483.75
 })
 
+## REVIEWS
+
+product1.reviews.create!({
+  rating: 5,
+  description: Faker::Hipster.paragraph(4),
+  user_id: user1
+})
+
+product2.reviews.create!({
+  rating: 3,
+  description: Faker::Hipster.paragraph(4),
+  user_id: user1
+})
+
+product3.reviews.create!({
+  rating: 2,
+  description: Faker::Hipster.paragraph(4),
+  user_id: user1
+})
 
 puts "DONE!"
