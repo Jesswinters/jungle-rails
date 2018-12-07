@@ -108,3 +108,20 @@ main section.products-show {
 .cart-empty--inner {
   text-align: center;
 }
+
+.product-reviews--container {
+  padding-bottom: 12px;
+  margin: 24px 0 12px;
+  border-bottom: 1px solid #eee;
+
+  &:last-child {
+    margin-bottom: 24px;
+  }
+}
+
+.product-reviews--rating,
+.product-reviews--description {
+  span {
+    font-weight: 600;
+  }
+}
