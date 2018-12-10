@@ -9,6 +9,13 @@ RSpec.describe User, type: :model do
       password: 'test1234',
       password_confirmation: 'test1234'
     })
+
+    @authenticatedUser = User.create!(
+      name: 'Authenticated',
+      email: 'auth@user.com',
+      password: 'authed1234',
+      password_confirmation: 'authed1234'
+    )
   end
 
   describe 'Validations' do
@@ -71,8 +78,20 @@ RSpec.describe User, type: :model do
       expect(@user4).to_not be_valid
     end
 
-    it 'should have a minimum length for password' do
+  end
 
+  describe '.authenticate_with_credentials' do
+
+    it 'should return an instance of user when login credentials correct' do
+      expect(User.authenticate_with_credentials('auth@user.com', 'authed1234')).to eq @authenticatedUser
+    end
+
+    it 'should login user when there are space in front of their email address' do
+      expect(User.authenticate_with_credentials('  auth@user.com', 'authed1234')).to eq @authenticatedUser
+    end
+
+    it 'should login user when they type in the wrong case for their email address' do
+      expect(User.authenticate_with_credentials('aUtH@user.COM', 'authed1234')).to eq @authenticatedUser
     end
 
   end
