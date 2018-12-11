@@ -24,6 +24,7 @@ RSpec.describe User, type: :model do
       @user.password == @user.password_confirmation
 
       expect(@user).to be_valid
+      @user.destroy
     end
 
     it 'requires email and name' do
@@ -31,6 +32,7 @@ RSpec.describe User, type: :model do
       @user.email = nil
 
       expect(@user).to_not be_valid
+      @user.destroy
     end
 
     it 'does not match password and password confirmation' do
@@ -38,6 +40,7 @@ RSpec.describe User, type: :model do
       @user.password_confirmation = 'test12345'
 
       expect(@user.password).to_not eql(@user.password_confirmation)
+      @user.destroy
     end
 
     it 'should only allow unique emails' do
@@ -57,6 +60,7 @@ RSpec.describe User, type: :model do
 
       expect(@user1).to be_valid
       expect(@user2).to_not be_valid
+      @user.destroy
     end
 
     it 'should only allow unique emails, regardless of case (not case sensitive)' do
@@ -76,6 +80,7 @@ RSpec.describe User, type: :model do
 
       expect(@user3).to be_valid
       expect(@user4).to_not be_valid
+      @user.destroy
     end
 
   end
@@ -84,14 +89,27 @@ RSpec.describe User, type: :model do
 
     it 'should return an instance of user when login credentials correct' do
       expect(User.authenticate_with_credentials('auth@user.com', 'authed1234')).to eq @authenticatedUser
+      @user.destroy
     end
 
     it 'should login user when there are space in front of their email address' do
       expect(User.authenticate_with_credentials('  auth@user.com', 'authed1234')).to eq @authenticatedUser
+      @user.destroy
     end
 
     it 'should login user when they type in the wrong case for their email address' do
       expect(User.authenticate_with_credentials('aUtH@user.COM', 'authed1234')).to eq @authenticatedUser
+      @user.destroy
+    end
+
+    it 'should not authenticate with the wrong password' do
+      expect(User.authenticate_with_credentials('auth@user.com', 'authed12345')).to_not eq @authenticatedUser
+      @user.destroy
+    end
+
+    it 'should not authenticate with the wrong email' do
+      expect(User.authenticate_with_credentials('notauth@user.com', 'authed1234')).to_not eq @authenticatedUser
+      @user.destroy
     end
 
   end
